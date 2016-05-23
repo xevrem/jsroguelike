@@ -1,0 +1,44 @@
+{
+    "author": "Erika Jonell",
+    "bugs": {
+        "url": "https://github.com/netgnome/hammerogue/issues"
+    },
+    "contributors": [
+        {
+            "email": "duane@sibilly.com",
+            "name": "Duane Sibilly"
+        }
+    ],
+    "dependencies": {
+        "async": "~1.4.2",
+        "hapi": "~8.8.1",
+        "require-directory": "~2.1.1",
+        "rot-js": "~0.6.0"
+    },
+    "description": "A roguelike for the Hammer Gaming Community",
+    "devDependencies": {
+        "eslint": "~0.12.0"
+    },
+    "engines": {
+        "node": ">=0.10.35"
+    },
+    "homepage": "https://github.com/netgnome/hammerogue#readme",
+    "keywords": [
+        "rot.js",
+        "roguelike",
+        "game"
+    ],
+    "license": "MIT",
+    "main": "app.js",
+    "name": "hammerogue",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/netgnome/hammerrogue.git"
+    },
+    "scripts": {
+        "pretest": "node_modules/.bin/eslint server *.js",
+        "start": "node app.js"
+    },
+    "version": "0.0.1"
+}

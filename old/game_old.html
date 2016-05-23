@@ -1,0 +1,29 @@
+<html>
+<head>
+	<script src='https://code.createjs.com/easeljs-0.8.1.min.js'></script>
+	<script>
+		function init(){
+			var stage = new createjs.Stage('main');
+			var circle = new createjs.Shape();
+			circle.graphics.beginFill('#5555ff').drawCircle(0,0,50);
+			circle.x=100;
+			circle.y=100;
+			stage.addChild(circle);
+			
+			circle.on('tick', function(event){
+				circle.x += Math.cos(circle.y)*1;
+				circle.y += Math.sin(circle.x)*1;
+			});
+
+			createjs.Ticker.on('tick', tick);
+
+			function tick(event){
+				stage.update(event);	
+			}
+		}
+	</script>
+</head>
+<body onload='init()'>
+	<canvas id='main' width='800' height='600'></canvas>
+</body>
+</html>
