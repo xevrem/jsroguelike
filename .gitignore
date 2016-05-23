@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Logs
 logs
 *.log
@@ -26,7 +26,7 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-=======
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -89,4 +89,4 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
->>>>>>> b8f7eaee5f7f89fd785a1628b072e5b54b770ef2
+
