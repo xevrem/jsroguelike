@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, make_response
+from paws import run_server
 from docopt import docopt
 import config
 
@@ -14,72 +14,64 @@ Options:
     -h --help       Display this message
     --debug         Debug the server [default: False]
     -p=<port>       Port for the server [default: 8080]
-    -a=<addr>       Address for the server [default: 0.0.0.0]
+    -a=<addr>       Address for the server [default: 127.0.0.1]
 """
 
-class Server:
-    _app = None
-    ADDR = None
-    PORT = None
+async def root(req, res):
+    res.body = 'hello world!'
+    return res
 
-    def __init__(self, address=config.ADDR, port=config.PORT):
-        self.ADDR = address
-        self.PORT = port
+async def resource(req, res):
+    asset = req.wildcards['asset']
 
-        self._app = Flask(__name__, template_folder=config.TEMPLATE_DIR)
-
-        self.setup_routes()
-
-    def load_and_cache_content(self):
-        pass
-
-    def setup_routes(self):
-        self._app.add_url_rule('/','root', self.root)
-        self._app.add_url_rule('/<asset>','resource', self.resource)
-        self._app.add_url_rule('/public/<asset>','public', self.public)
-
-    def run(self,debug):
-        print('running...')
-        self._app.run(self.ADDR, self.PORT, debug=debug)
-
-    def root(self):
-        return "hi"
-
-    def resource(self,asset):
+    try:
         with open(config.PUBLIC_DIR+asset) as f:
             data = f.read()
 
-        resp = make_response(data,200)
+        res.headers['Content-Type'] = process_mime_headers(asset)
+        res.body = data
+    except:
+        res.status = '404'
+        data = ""
 
-        return resp
+    res.body = data
 
-    def public(self, asset):
+    return res
+
+async def public(req, res):
+    asset = req.wildcards['asset']
+
+    try:
         with open(config.PUBLIC_DIR+asset) as f:
             data = f.read()
 
-        resp = make_response(data,200)
+        res.headers['Content-Type'] = process_mime_headers(asset)
+        res.body = data
+    except:
+        res.status = '404'
+        data = ""
 
-        resp.headers['Content-Type'] = process_mime_headers(asset)
 
-        return resp
+    return res
+
 
 def process_mime_headers(filename):
     if '.css' in filename:
         return 'text/css'
     elif '.js' in filename:
-        return 'application/javascript'
+        return 'text/javascript'
     else:
         return 'text/html'
 
+def routes(app):
+    app.add_route('/', root)
+    app.add_route('/{asset}',resource)
+    app.add_route('/public/{asset}', public)
+
 def main(args):
-
-    server = Server(port=int(args['-p']), address=args['-a'])
-
-    if args['run']:
-        server.run(args['--debug'])
-
+    run_server(routing_cb=routes, host='127.0.0.1', port=8080, processes=2,
+    use_uvloop=False, debug=True)
 
 if __name__ == '__main__':
     args = docopt(opts)
-    print(args)
     main(args)

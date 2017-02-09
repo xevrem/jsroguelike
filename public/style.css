@@ -6,7 +6,7 @@ body {
 	line-height: 1.7em;
 }
 
-#container {
+.container {
 	background-color: #000;
 	border: 1px solid #333;
 	border-radius: 16px;
