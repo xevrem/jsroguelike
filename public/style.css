@@ -2,7 +2,7 @@ body {
 	background-color: #555;
 	color: #333;
 	font-size: 13px;
-	font-family: monospace;
+	font-family: 'Droid Sans Mono', monospace;
 	line-height: 1.7em;
 }
 
@@ -19,6 +19,5 @@ body {
 
 .title {
 	text-transform: uppercase;
-	font-family: monospace;
 	font-size: 30px;
 }
